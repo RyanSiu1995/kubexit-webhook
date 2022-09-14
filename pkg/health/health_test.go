@@ -5,6 +5,8 @@ import (
     "testing"
     "net/http"
     "net/http/httptest"
+
+    "github.com/stretchr/testify/assert"
 )
 
 func TestHealthCheck(t *testing.T) {
@@ -17,10 +19,6 @@ func TestHealthCheck(t *testing.T) {
     defer res.Body.Close()
 
     data, err := ioutil.ReadAll(res.Body)
-    if err != nil {
-        t.Errorf("Expected error to be nil got %v", err)
-    }
-    if string(data) != "OK" {
-        t.Errorf("Expected OK got %v", string(data))
-    }
+    assert.Nil(t, err, "Expected no error out")
+    assert.Equal(t, "OK", string(data), "Expected OK")
 }
