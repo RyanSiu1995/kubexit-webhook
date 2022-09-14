@@ -1,6 +1,12 @@
 name: Build and Test
 
-on: [push]
+on:
+  push:
+    braches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -20,3 +26,13 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           files: ./cov.out
           verbose: true
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+      - name: Format the code
+        uses: Jerome1337/gofmt-action@v1.0.4

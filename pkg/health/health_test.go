@@ -1,24 +1,24 @@
 package health
 
 import (
-    "io/ioutil"
-    "testing"
-    "net/http"
-    "net/http/httptest"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
+	"testing"
 
-    "github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHealthCheck(t *testing.T) {
-    req := httptest.NewRequest(http.MethodGet, "/heath", nil)
-    w := httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodGet, "/heath", nil)
+	w := httptest.NewRecorder()
 
-    HealthCheckHandler(w, req)
-    res := w.Result()
+	HealthCheckHandler(w, req)
+	res := w.Result()
 
-    defer res.Body.Close()
+	defer res.Body.Close()
 
-    data, err := ioutil.ReadAll(res.Body)
-    assert.Nil(t, err, "Expected no error out")
-    assert.Equal(t, "OK", string(data), "Expected OK")
+	data, err := ioutil.ReadAll(res.Body)
+	assert.Nil(t, err, "Expected no error out")
+	assert.Equal(t, "OK", string(data), "Expected OK")
 }

@@ -1,17 +1,17 @@
 package internal
 
 import (
-    "net/http"
-    "bytes"
-    "encoding/json"
-    "fmt"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
 
+	"github.com/sirupsen/logrus"
 	admissionv1 "k8s.io/api/admission/v1"
-    "github.com/sirupsen/logrus"
 )
 
 func RequestToAdmission(r *http.Request) (*admissionv1.AdmissionReview, error) {
-    logrus.Debug("Invoking Request body to Admission")
+	logrus.Debug("Invoking Request body to Admission")
 	bodyBuffer := new(bytes.Buffer)
 	bodyBuffer.ReadFrom(r.Body)
 	body := bodyBuffer.Bytes()
