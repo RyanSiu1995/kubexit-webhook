@@ -15,3 +15,8 @@ jobs:
         run: go build -v ./...
       - name: Test
         run: go test -v -coverprofile cov.out ./...
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./cov.out
+          verbose: true
